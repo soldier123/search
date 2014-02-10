@@ -1,0 +1,32 @@
+#{extends 'main.html' /}
+#{set title:'elasticsearch' /}
+<form aciont accept="@{Application.index()}">
+
+    关键字搜索：<input type="text" name="keyword" value="${map.keyword}" >
+    开始时间：<input type="text" name="startDate" value="${map.startDate}" >
+    结束时间：<input type="text" name="endDate" value="${map.endDate}" >
+    <input type="submit" value="搜索" />
+</form>
+<div style="color:red">搜索结果 共 ${count} 条,共用时:${cost} 毫秒</div>
+<div id="result">
+    #{list items:newsList,as : "news" }
+        <div>证券代码:${news.securityIds.raw()}</div>
+        <div>更新时间:${news.updateDate.raw()}</div>
+        <div>标题:${news.title.raw()}  <span onclick="showDetail('${news.id}')" style="color:blue; text-decoration: underline;cursor: pointer">查看详情</span></div>
+        <div style="display: none" id="${news.id}"><br><br>${news.content.raw()} </div>
+        <hr stype="color:red">
+    #{/list}
+</div>
+<script type="text/javascript">
+function showDetail(id){
+ var div = document.getElementById(id);
+
+    if(div.style.display == "none"){
+        div.style.display = "block";
+    }else{
+        div.style.display = "none";
+    }
+}
+
+</script>
+

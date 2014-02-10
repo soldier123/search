@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>公告  新闻   研报sql</comment>
+
+    <!--根据新闻ID获取详细信息 -->
+     <entry key="findNews">
+        <![CDATA[
+        SELECT
+          nn.`NEWSID` 'newsId',
+          nn.`TITLE` 'title',
+          nn.`NEWSSOURCE` 'nSource',
+          nn.`DECLAREDATE` 'declareDate',
+          nn.`UPDATETIME` 'updateDate',
+          nn. `UTSID` 'utsId'
+
+        FROM
+          news_newsinfo nn
+        WHERE
+          nn.`NEWSID`>0
+        limit ?,?
+        ]]>
+    </entry>
+
+    <!--查找2000年之前的新闻-->
+    <entry key="findNewsBefore2000Year">
+        <![CDATA[
+        SELECT
+          nn.`NEWSID` 'newsId',
+          nn.`TITLE` 'title',
+          nn.`NEWSSOURCE` 'nSource',
+          nn.`DECLAREDATE` 'declareDate',
+          nn.`UPDATETIME` 'updateDate',
+          nn. `UTSID` 'utsId'
+        FROM
+          news_newsinfo nn
+        WHERE
+          nn.`NEWSID`>0
+          and DECLAREDATE BETWEEN '1900-01-01 00:00:00' AND '1999-12-31 23:59:59'
+                ]]>
+    </entry>
+
+    <!--查找指定日期的新闻-->
+    <entry key="findNewsInDay">
+        <![CDATA[
+        SELECT
+          nn.`NEWSID` 'newsId',
+          nn.`TITLE` 'title',
+          nn.`NEWSSOURCE` 'nSource',
+          nn.`DECLAREDATE` 'declareDate',
+          nn.`UPDATETIME` 'updateDate',
+          nn. `UTSID` 'utsId'
+        FROM
+          news_newsinfo nn
+        WHERE
+          nn.`NEWSID` > 0
+          and DECLAREDATE BETWEEN '#today# 00:00:00' AND '#today# 23:59:59'
+                ]]>
+    </entry>
+
+    <!--查找新闻表的最大日期-->
+    <entry key="findMaxNewsDate">
+        <![CDATA[
+SELECT
+  MAX(DECLAREDATE)
+FROM
+  news_newsinfo nn
+WHERE
+  nn.`NEWSID` > 0
+  AND DECLAREDATE > ?
+        ]]>
+    </entry>
+
+
+<!--查找公告-->
+    <entry key="findAnnInfos">
+        <![CDATA[
+        SELECT
+          aa.`ANNOUNCEMENTID` 'annId',
+          aa.`TITLE` 'title',
+          aa.`DECLAREDATE` 'declareDate',
+          aa.`UPDATETIME` 'updateDate',
+          aa.`ANNOUNCEMENTROUTE` 'attach',
+          aa. `UTSID` 'utsId'
+        FROM
+          ann_announcementinfo aa
+        WHERE
+          aa.`ANNOUNCEMENTID`>0
+        limit ?,?
+        ]]>
+    </entry>
+
+    <!--查找研报-->
+    <entry key="findReports">
+        <![CDATA[
+        SELECT
+              ri.`REPORTID` 'reportId',
+              ri.`TITLE` 'title',
+              ri.`DECLAREDATE` 'declareDate',
+              ri.`UPDATETIME` 'updateDate',
+              ri.`FILESTORAGEPATH` 'attach',
+              ri. `UTSID` 'utsId'
+        FROM
+             rep_reportinfo ri
+        WHERE   REPORTID>0
+         limit ?,?
+        ]]>
+    </entry>
+
+
+    <entry key="findNewsById">
+        <![CDATA[
+        SELECT
+              nn.`NEWSID` 'newsId',
+              nn.`TITLE` 'title',
+              nn.`NEWSSOURCE` 'nSource',
+              nn.`DECLAREDATE` 'declareDate',
+              nn.`UPDATETIME` 'updateDate',
+              nn. `UTSID` 'utsId'
+
+        FROM
+              news_newsinfo nn
+        WHERE
+             nn.NEWSID>0 AND nn.NEWSID=?
+                ]]>
+    </entry>
+
+    <entry key="findNewsByClassifyUTSId">
+        <![CDATA[
+        SELECT
+              nn.`NEWSID` 'newsId',
+              nn.`TITLE` 'title',
+              nn.`NEWSSOURCE` 'nSource',
+              nn.`DECLAREDATE` 'declareDate',
+              nn.`UPDATETIME` 'updateDate',
+              nn. `UTSID` 'utsId'
+
+        FROM
+              news_newsinfo nn
+        INNER JOIN
+               news_classify nc
+        ON
+               nc.NEWSID=nn.NEWSID
+        WHERE
+               nc.UTSID=? AND nn.NEWSID>0
+                ]]>
+    </entry>
+
+    <entry key="findNewsByIndustryUTSId">
+        <![CDATA[
+        SELECT
+              nn.`NEWSID` 'newsId',
+              nn.`TITLE` 'title',
+              nn.`NEWSSOURCE` 'nSource',
+              nn.`DECLAREDATE` 'declareDate',
+              nn.`UPDATETIME` 'updateDate',
+              nn. `UTSID` 'utsId'
+
+        FROM
+              news_newsinfo nn
+        INNER JOIN
+               news_industry ni
+        ON
+               ni.NEWSID=nn.NEWSID
+        WHERE
+               ni.UTSID=? AND nn.NEWSID>0
+                ]]>
+    </entry>
+
+
+    <entry key="findNewsBySecurityUTSId">
+        <![CDATA[
+        SELECT
+              nn.`NEWSID` 'newsId',
+              nn.`TITLE` 'title',
+              nn.`NEWSSOURCE` 'nSource',
+              nn.`DECLAREDATE` 'declareDate',
+              nn.`UPDATETIME` 'updateDate',
+              nn. `UTSID` 'utsId'
+
+        FROM
+              news_newsinfo nn
+        INNER JOIN
+               news_security ns
+        ON
+               ns.NEWSID=nn.NEWSID
+        WHERE
+               ns.UTSID=? AND nn.NEWSID>0
+                ]]>
+    </entry>
+
+
+    <entry key="findNewsByUTSId">
+        <![CDATA[
+        SELECT
+              nn.`NEWSID` 'newsId',
+              nn.`TITLE` 'title',
+              nn.`NEWSSOURCE` 'nSource',
+              nn.`DECLAREDATE` 'declareDate',
+              nn.`UPDATETIME` 'updateDate',
+              nn. `UTSID` 'utsId'
+
+        FROM
+               news_newsinfo nn
+        INNER JOIN
+               #tableName# tb
+        ON
+               tb.NEWSID=nn.NEWSID
+        WHERE
+               tb.UTSID=? AND nn.NEWSID>0
+                ]]>
+    </entry>
+
+    <entry key="findAnnById">
+        <![CDATA[
+             SELECT
+                aa.`ANNOUNCEMENTID` 'annId',
+                aa.`TITLE` 'title',
+                aa.`DECLAREDATE` 'declareDate',
+                aa.`UPDATETIME` 'updateDate',
+                aa.`ANNOUNCEMENTROUTE` 'attach',
+                aa. `UTSID` 'utsId'
+             FROM
+                ann_announcementinfo aa
+             WHERE
+                aa.ANNOUNCEMENTID>0 AND aa.ANNOUNCEMENTID=?
+                ]]>
+    </entry>
+
+
+    <entry key="findAnnByUTSId">
+        <![CDATA[
+             SELECT
+                aa.`ANNOUNCEMENTID` 'annId',
+                aa.`TITLE` 'title',
+                aa.`DECLAREDATE` 'declareDate',
+                aa.`UPDATETIME` 'updateDate',
+                aa.`ANNOUNCEMENTROUTE` 'attach',
+                aa. `UTSID` 'utsId'
+             FROM
+                ann_announcementinfo aa
+             INNER JOIN
+                #tableName#  tb
+             ON
+                tb.ANNOUNCEMENTID=aa.ANNOUNCEMENTID
+             WHERE
+                aa.ANNOUNCEMENTID>0 AND tb.UTSID=?
+                ]]>
+    </entry>
+
+
+    <entry key="findReportById">
+        <![CDATA[
+        SELECT
+              ri.`REPORTID` 'reportId',
+              ri.`TITLE` 'title',
+              ri.`DECLAREDATE` 'declareDate',
+              ri.`UPDATETIME` 'updateDate',
+              ri.`FILESTORAGEPATH` 'attach',
+              ri. `UTSID` 'utsId'
+        FROM
+             rep_reportinfo ri
+        WHERE
+             ri.REPORTID>0 AND ri.REPORTID=?
+                ]]>
+    </entry>
+
+
+    <entry key="findReportByUTSId">
+        <![CDATA[
+        SELECT
+              ri.`REPORTID` 'reportId',
+              ri.`TITLE` 'title',
+              ri.`DECLAREDATE` 'declareDate',
+              ri.`UPDATETIME` 'updateDate',
+              ri.`FILESTORAGEPATH` 'attach',
+              ri.`UTSID` 'utsId'
+        FROM
+             rep_reportinfo ri
+        INNER JOIN
+                #tableName#  tb
+        ON tb.REPORTID=ri.REPORTID
+        WHERE
+             ri.REPORTID>0 AND tb.UTSID=?
+                ]]>
+    </entry>
+
+  <!--查找新闻分类ID-->
+    <entry key="findNewsClassifyIds">
+        <![CDATA[
+        SELECT
+          CLASSIFYID classifyId
+        FROM
+          news_classify
+        WHERE
+            NEWSID>0 AND NEWSID=?
+                ]]>
+    </entry>
+
+
+    <!--
+    查找新闻证券ID. 只查找A,B股的
+    'P50100'  A股
+    'P50101'  B股
+    -->
+    <entry key="findNewsSecurityIds">
+        <![CDATA[
+        SELECT
+          SYMBOL symbol
+        FROM
+          news_security
+        WHERE
+            NEWSID > 0 AND NEWSID=? AND SECURITYTYPEID IN ('P50100', 'P50101')
+                ]]>
+    </entry>
+
+
+    <!--查找新闻行业ID-->
+    <entry key="findNewsIndustryIds">
+        <![CDATA[
+        SELECT
+          INDUSTRYCODE code,INDUSTRYSYSTEMCODE type
+        FROM
+          news_industry
+        WHERE
+          NEWSID>0 AND NEWSID=?
+                ]]>
+    </entry>
+    <entry key="findSymbolIndustry">
+        SELECT
+              k.SYMBOL AS 'symbol', k.INDUSTRYCODE AS 'industry'
+        FROM
+              stk_industryclass k
+        INNER JOIN
+        (
+            SELECT
+                    INSTITUTIONID, MAX(CHANGEDATE) AS CHANGEDATE
+            FROM
+                    stk_industryclass
+            WHERE
+                    INDUSTRYCLASSIFICATIONID = 'P0207'
+            GROUP BY INSTITUTIONID
+        ) AS v
+        ON k.`INSTITUTIONID` = v.INSTITUTIONID AND k.CHANGEDATE = v.CHANGEDATE
+        WHERE k.INDUSTRYCLASSIFICATIONID='P0207'
+    </entry>
+
+
+    <!--查找新闻分类ID-->
+    <entry key="findAnnClassifyIds">
+        <![CDATA[
+        SELECT
+          CLASSIFYID classifyId
+        FROM
+          ann_classify
+        WHERE
+           ANNOUNCEMENTID>0 AND ANNOUNCEMENTID=?
+                ]]>
+    </entry>
+
+    <!--
+    公告跟证券关联, 只取A,B股的
+    'P50100'  A股
+    'P50101'  B股
+    -->
+    <entry key="findAnnSecurityIds">
+        <![CDATA[
+        SELECT
+          SYMBOL symbol
+        FROM
+          ann_security
+        WHERE
+           ANNOUNCEMENTID>0 AND ANNOUNCEMENTID=? AND SECURITYTYPEID IN ('P50100', 'P50101')
+                ]]>
+    </entry>
+
+
+
+    <!--查找研报分类ID-->
+    <entry key="findReportClassifyIds">
+        <![CDATA[
+            SELECT
+              CATEGORYCODE id
+            FROM
+              rep_category
+            WHERE
+              REPORTID > 0 AND REPORTID = ?
+                ]]>
+    </entry>
+
+    <entry key="findReportSecurityIds">
+        <![CDATA[
+        SELECT
+          SYMBOL symbol
+        FROM
+          rep_security
+        WHERE
+          REPORTID > 0 AND REPORTID = ?
+                ]]>
+    </entry>
+
+    <entry key="findReportSourceIds">
+        <![CDATA[
+        SELECT
+          INSTITUTIONID id
+        FROM
+          rep_institution
+        WHERE
+        REPORTID > 0 AND  REPORTID = ?
+                ]]>
+    </entry>
+
+    <!--查找研报行业代码-->
+    <entry key="findRepIndustryIds">
+        <![CDATA[
+        SELECT
+          INDUSTRYCODE code, INDUSTRYSYSTEMCODE type
+        FROM
+          rep_industry
+        WHERE
+           REPORTID > 0 AND  REPORTID = ?
+                ]]>
+    </entry>
+
+    <!--根据板块树节点id查询相应的成份股-->
+    <entry key="getSymbolByPlateId">
+        <![CDATA[
+        SELECT DISTINCT
+          a.SYMBOL AS stockCode
+        FROM gta_data.Plate_StockChangelatest a
+        WHERE a.PLATEID like '#typeid#%' and a.SECURITYID IS NOT NULL
+        ]]>
+    </entry>
+</properties>

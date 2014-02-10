@@ -1,0 +1,19 @@
+# Application dependencies
+
+require:
+    - play
+    - play -> guice 1.2
+    - play -> redis 0.3
+    - com.google.guava -> guava 14.0.1 :
+        transitive: false
+    - commons-dbutils -> commons-dbutils 1.5
+    - com.alibaba -> fastjson 1.1.28 :
+        transitive: false
+    - org.apache.lucene -> lucene-analyzers 3.6.2
+    - org.apache.lucene -> lucene-core 3.6.2
+    - org.apache.lucene -> lucene-highlighter 3.6.2
+    - org.apache.lucene -> lucene-memory 3.6.2
+    - org.apache.lucene -> lucene-queries 3.6.2
+    - jakarta-regexp -> jakarta-regexp 1.4
+    - org.elasticsearch -> elasticsearch 0.20.2 :
+        transitive: false
